@@ -45,7 +45,7 @@ class SitemapGenerator
 
     /**
      * Creates a sitemap
-     * @return SitemapURLSet
+     * @return \RobertBoes\SitemapGenerator\XML\SitemapURLSet
      */
     public function sitemap() {
         return $this->urlSet;
@@ -61,7 +61,7 @@ class SitemapGenerator
     /**
      * Creates a sitemap index
      * This is used to link to other sitemaps
-     * @return SitemapIndex
+     * @return \RobertBoes\SitemapGenerator\XML\SitemapIndex
      */
     public function sitemapIndex(){
         return $this->index;

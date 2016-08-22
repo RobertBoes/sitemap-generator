@@ -2,6 +2,7 @@
 
 namespace RobertBoes\SitemapGenerator\XML;
 
+use Faker\Provider\Base;
 use Illuminate\Http\Request;
 use Illuminate\Cache\Repository as Cache;
 use RobertBoes\SitemapGenerator\Tag\BaseTag;
@@ -19,6 +20,11 @@ abstract class SitemapBase
     protected $request;
 
     protected $tags = [];
+
+    /**
+     * The default schemes that will always be added
+     * @var array
+     */
     protected $schemas = [
         'xmlns' => 'http://www.sitemaps.org/schemas/sitemap/0.9'
     ];
@@ -29,10 +35,31 @@ abstract class SitemapBase
         $this->addValidationSchemas($this instanceof SitemapURLSet ? 'sitemap' : 'sitemapindex');
     }
 
+    /**
+     * Add a tag to the sitemap
+     * @param BaseTag $tag
+     */
     public function addTag(BaseTag $tag) {
         $this->tags[] = $tag;
     }
 
+    /**
+     * Add a new scheme with array. The array contains a namespace and location
+     * Scheme looks like ['ns' => '...', 'url' => '...']
+     * @param $scheme
+     * @param $overwrite
+     */
+    protected function addSchemeByArray($scheme, $overwrite) {
+        $this->addScheme($scheme['ns'], $scheme['url'], $overwrite);
+    }
+
+    /**
+     * Add a new namespace with scheme location to the sitemap
+     * This is used by video tags for example
+     * @param $namespace
+     * @param $schemaLocation
+     * @param bool $overwrite
+     */
     protected function addScheme($namespace, $schemaLocation, $overwrite = false) {
         if(!key_exists($namespace, $this->schemas) || $overwrite) {
             $this->schemas[$namespace] = $schemaLocation;
