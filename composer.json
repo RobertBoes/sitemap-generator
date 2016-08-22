@@ -1,0 +1,15 @@
+{
+    "name": "robert/sitemap-generator",
+    "description": "Laravel 5.2 sitemap generator",
+    "require": {
+        "php": ">=5.5.9",
+        "illuminate/support": "5.2.*"
+    },
+    "authors": [
+        {
+            "name": "Robert Boes",
+            "email": "robert@robertboes.nl"
+        }
+    ],
+    "minimum-stability": "dev"
+}
