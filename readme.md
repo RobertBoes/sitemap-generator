@@ -40,17 +40,37 @@ use SitemapGenerator;
 
 class SitemapController extends Controller {
 
-  public function index() {
-    $newestPostCreatedAt = Post::orderBy('created_at', 'desc')->first()->created_at;
+    public function index() {
+        $newestPostCreatedAt = Post::orderBy('created_at', 'desc')->first()->created_at;
     
-    $map = SitemapGenerator::sitemap();
-    $map->addLocation(route('home'));
-    $map->addLocation(route('posts'), $newestPostCreatedAt, 'weekly');
-    $map->addLocation(route('contact', null, null, '0.9'));
-    return $map->render();
-  }
+        $map = SitemapGenerator::sitemap();
+        $map->addLocation(route('home'));
+        $map->addLocation(route('posts'), $newestPostCreatedAt, 'weekly');
+        $map->addLocation(route('contact', null, null, '0.9'));
+        return $map->render();
+    }
 }
 ```
+
+It's also possible to link all the functions like this:
+```php
+public function index() {
+    return SitemapGenerator::sitemap()
+        ->addLocation(route('home'))
+        ->addLocation(route('faq', null, null, '0.9'))
+        ->render();
+}
+public function posts() {
+    SitemapGenerator::sitemap()
+        ->addLocation(route('post', ['id' => 1]))
+        ->addLocation(route('post', ['id' => 2]));
+    
+    return SitemapGenerator::sitemap()->render();
+}
+```
+
+
+
 
 #### Video sitemaps ####
 //TODO
