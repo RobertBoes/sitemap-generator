@@ -3,7 +3,7 @@
 namespace RobertBoes\SitemapGenerator\Tag\Extension;
 
 
-use RobertBoes\SitemapGenerator\XML\Scheme;
+use RobertBoes\SitemapGenerator\Sitemap\Scheme;
 
 class Video extends BaseExtension
 {
@@ -18,7 +18,7 @@ class Video extends BaseExtension
     protected static $schemeNamespace = 'xmlns:video';
     protected static $schemeUrl = 'http://www.google.com/schemas/sitemap-video/1.1';
 
-    public function __construct($thumbnail_loc, $title, $description, array $videoData) {
+    public function __construct($thumbnail_loc, $title, $description, array $videoData = null) {
         $this->thumbnailLocation = $thumbnail_loc;
         $this->title = $title;
         $this->description = $description;

@@ -1,14 +1,15 @@
 <?php
 
-namespace RobertBoes\SitemapGenerator\XML;
+namespace RobertBoes\SitemapGenerator\Sitemap;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Cache\Repository as Cache;
+use RobertBoes\SitemapGenerator\Tag\BaseTag;
 use RobertBoes\SitemapGenerator\Tag\UrlTag;
 use RobertBoes\SitemapGenerator\Tag\VideoTag;
 
-class SitemapURLSet extends SitemapBase implements SitemapInterface
+class SitemapUrlSet extends SitemapBase implements SitemapInterface
 {
 
     public function __construct(Cache $cache, Request $request)
@@ -29,28 +30,7 @@ class SitemapURLSet extends SitemapBase implements SitemapInterface
         return $this;
     }
 
-    /**
-     * Add a video location tag to the sitemap
-     * @param $url
-     * @param array $videoData
-     * @param Carbon|null $lastModified
-     * @param null $changeFrequency
-     * @param null $priority
-     * @return $this
-     */
-    public function addVideoLocation($url, array $videoData, Carbon $lastModified = null, $changeFrequency = null, $priority = null) {
-        $this->addSchemeByArray(VideoTag::getScheme(), false);
-        $this->tags[] = new VideoTag($url, $videoData, $lastModified, $changeFrequency, $priority);
-        return $this;
-    }
-
-    /**
-     * Add a new VideoTag object to the sitemap
-     * @param VideoTag $tag
-     * @return $this
-     */
-    public function addVideoTag(VideoTag $tag) {
-        $this->addSchemeByArray(VideoTag::getScheme(), false);
+    public function addTag(BaseTag $tag) {
         $this->tags[] = $tag;
         return $this;
     }

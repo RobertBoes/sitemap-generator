@@ -16,6 +16,7 @@ class BaseTag
      */
     protected $lastModified;
 
+
     /**
      * BaseTag constructor.
      * @param string $location

@@ -3,7 +3,8 @@
 namespace RobertBoes\SitemapGenerator\Tag\Extension;
 
 
-use RobertBoes\SitemapGenerator\XML\Scheme;
+use Carbon\Carbon;
+use RobertBoes\SitemapGenerator\Sitemap\Scheme;
 
 class News extends BaseExtension
 {

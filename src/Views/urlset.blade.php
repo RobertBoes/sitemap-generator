@@ -15,9 +15,9 @@
                 <priority>{{ $tag->getPriority() }}</priority>
             @endif
 
-            @if($tag instanceof \RobertBoes\SitemapGenerator\Tag\VideoTag)
-                @include('sitemap-generator::templates.video-location', ['tag' => $tag])
-            @endif
+            @foreach($tag->extensions() as $extension)
+                @include('sitemap-generator::extension.'. $extension->getView(), ['extensionTag' => $extension])
+            @endforeach
         </url>
     @endforeach
 </urlset>

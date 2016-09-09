@@ -4,7 +4,7 @@ namespace RobertBoes\SitemapGenerator\Tag\Extension;
 
 
 use Carbon\Carbon;
-use RobertBoes\SitemapGenerator\XML\Scheme;
+use RobertBoes\SitemapGenerator\Sitemap\Scheme;
 
 class Image extends BaseExtension
 {
@@ -21,4 +21,5 @@ class Image extends BaseExtension
     {
         $this->location = $location;
     }
+
 }

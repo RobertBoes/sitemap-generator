@@ -1,10 +1,7 @@
 <video:video>
-    @foreach($tag->getProperties() as $property)
-        <video:{{ $property }}> {!! $tag->{$property} !!}}</video:{{ $property }}>
-    @endforeach
-    <video:thumbnail_loc>{!! $tag->getThumbnailLocation() !!}</video:thumbnail_loc>
-    <video:title>{!! $tag->getTitle() !!}</video:title>
-    <video:description>{!! $tag->getDescription() !!}</video:description>
+    <video:thumbnail_loc>{!! $extensionTag->getThumbnailLocation() !!}</video:thumbnail_loc>
+    <video:title>{!! $extensionTag->getTitle() !!}</video:title>
+    <video:description>{!! $extensionTag->getDescription() !!}</video:description>
 
     {{--<video:content_loc>http://www.example.com/video123.flv</video:content_loc>--}}
 

@@ -1,8 +1,7 @@
 <?php
 
-namespace RobertBoes\SitemapGenerator\XML;
+namespace RobertBoes\SitemapGenerator\Sitemap;
 
-use Faker\Provider\Base;
 use Illuminate\Http\Request;
 use Illuminate\Cache\Repository as Cache;
 use RobertBoes\SitemapGenerator\Tag\BaseTag;
@@ -26,13 +25,15 @@ abstract class SitemapBase
      * @var array
      */
     protected $schemas = [
-        'xmlns' => 'http://www.sitemaps.org/schemas/sitemap/0.9'
+        'xmlns' => 'http://www.sitemaps.org/schemas/sitemap/0.9',
+        'xmlns:mobile' => 'http://www.google.com/schemas/sitemap-mobile/1.1',
+        'xmlns:video' => 'http://www.google.com/schemas/sitemap-video/1.1'
     ];
 
     public function __construct(Cache $cache, Request $request) {
         $this->cache = $cache;
         $this->request = $request;
-        $this->addValidationSchemas($this instanceof SitemapURLSet ? 'sitemap' : 'sitemapindex');
+        $this->addValidationSchemas($this instanceof SitemapUrlSet ? 'sitemap' : 'sitemapindex');
     }
 
     /**
@@ -44,13 +45,22 @@ abstract class SitemapBase
     }
 
     /**
+     * @param Scheme $scheme
+     * @param bool $overwrite
+     */
+    protected function addScheme(Scheme $scheme, $overwrite = false) {
+        if(!key_exists($scheme->getNamespace(), $this->schemas) || $overwrite) {
+            $this->schemas[$scheme->getNamespace()] = $scheme->getLocation();
+        }
+    }
+    /**
      * Add a new scheme with array. The array contains a namespace and location
      * Scheme looks like ['ns' => '...', 'url' => '...']
-     * @param $scheme
-     * @param $overwrite
+     * @param array $scheme
+     * @param bool $overwrite
      */
-    protected function addSchemeByArray($scheme, $overwrite) {
-        $this->addScheme($scheme['ns'], $scheme['url'], $overwrite);
+    protected function addSchemeByArray($scheme, $overwrite = false) {
+        $this->addScheme(new Scheme($scheme['ns'], $scheme['url']), $overwrite);
     }
 
     /**
@@ -60,10 +70,8 @@ abstract class SitemapBase
      * @param $schemaLocation
      * @param bool $overwrite
      */
-    protected function addScheme($namespace, $schemaLocation, $overwrite = false) {
-        if(!key_exists($namespace, $this->schemas) || $overwrite) {
-            $this->schemas[$namespace] = $schemaLocation;
-        }
+    protected function addSchemeByName($namespace, $schemaLocation, $overwrite = false) {
+        $this->addScheme(new Scheme($namespace, $schemaLocation), $overwrite);
     }
 
     protected function addValidationSchemas($type) {
@@ -71,7 +79,7 @@ abstract class SitemapBase
         if($enabled === true || (is_array($enabled) && in_array($type, $enabled))) {
             $validationSchemes = config('sitemap-generator.validation.'. $type);
             foreach($validationSchemes as $namespace => $schemaLocation) {
-                $this->addScheme($namespace, $schemaLocation);
+                $this->addScheme(new Scheme($namespace, $schemaLocation));
             }
         }
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace RobertBoes\SitemapGenerator\XML;
+namespace RobertBoes\SitemapGenerator\Sitemap;
 
 interface SitemapInterface
 {

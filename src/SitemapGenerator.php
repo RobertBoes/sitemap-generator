@@ -4,8 +4,8 @@ namespace RobertBoes\SitemapGenerator;
 
 use Illuminate\Http\Request;
 use Illuminate\Cache\Repository as Cache;
-use RobertBoes\SitemapGenerator\XML\SitemapIndex;
-use RobertBoes\SitemapGenerator\XML\SitemapURLSet;
+use RobertBoes\SitemapGenerator\Sitemap\SitemapIndex;
+use RobertBoes\SitemapGenerator\Sitemap\SitemapUrlSet;
 
 class SitemapGenerator
 {
@@ -39,13 +39,13 @@ class SitemapGenerator
         $this->cache = $cache;
         $this->request = $request;
 
-        $this->urlSet = new SitemapURLSet($cache, $request);
+        $this->urlSet = new SitemapUrlSet($cache, $request);
         $this->index = new SitemapIndex($cache, $request);
     }
 
     /**
      * Creates a sitemap
-     * @return \RobertBoes\SitemapGenerator\XML\SitemapURLSet
+     * @return \RobertBoes\SitemapGenerator\Sitemap\SitemapUrlSet
      */
     public function sitemap() {
         return $this->urlSet;
@@ -61,7 +61,7 @@ class SitemapGenerator
     /**
      * Creates a sitemap index
      * This is used to link to other sitemaps
-     * @return \RobertBoes\SitemapGenerator\XML\SitemapIndex
+     * @return \RobertBoes\SitemapGenerator\Sitemap\SitemapIndex
      */
     public function sitemapIndex(){
         return $this->index;

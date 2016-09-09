@@ -9,9 +9,9 @@
 namespace RobertBoes\SitemapGenerator\Tag\Extension;
 
 
-use RobertBoes\SitemapGenerator\XML\Scheme;
+use RobertBoes\SitemapGenerator\Sitemap\Scheme;
 
-class BaseExtension
+abstract class BaseExtension
 {
     protected static $scheme;
     protected static $schemeNamespace;
@@ -23,5 +23,10 @@ class BaseExtension
      */
     public function scheme() {
         return isset(self::$scheme) ? self::$scheme : new Scheme(self::$schemeNamespace, self::$schemeUrl);
+    }
+
+    public function getView() {
+        $reflection = new \ReflectionClass($this);
+        return strtolower( $reflection->getShortName() );
     }
 }
